@@ -79,9 +79,9 @@ binfiles: $(BINFILES)
 ocversion:
 	./oc-version.sh
 
-ocboot: ocversion oc-boot.sunxi
+boot: version.h oc-boot.sunxi
 
-flash: ocboot oc-boot.sunxi
+flash: boot
 	sunxi-fel -v -p spl oc-boot.sunxi
 
 clean:

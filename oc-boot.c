@@ -50,6 +50,8 @@
  * SPDX-License-Identifier:    GPL-2.0+
  */
 
+#include "version.h"
+
 typedef unsigned int u32;
 typedef unsigned short int u16;
 typedef unsigned char u8;
@@ -574,9 +576,9 @@ int main(void)
     gpio_init(soc);
     uart0_init(soc);
 
-    uart0_puts("\nLoading OpenCentauri Bootloader ");
-    uart0_puts(OC_VERSION);
-    uart0_puts(" for Allwinner ");
+    uart0_puts("\nLoading OpenCentauri Bootloader (version ");
+    uart0_puts(VERSION);
+    uart0_puts(") for Allwinner ");
     uart0_puts(soc->soc_name);
     uart0_puts("...\n");
 

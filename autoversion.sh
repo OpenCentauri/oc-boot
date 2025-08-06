@@ -5,7 +5,6 @@
 
 commit_date=$(git show -s HEAD --format=%cd --date=short | sed 's/-//g')
 date_and_hash="${commit_date}-$(git rev-parse --short HEAD)"
-
 VER="${date_and_hash}"
 echo >&2
 
