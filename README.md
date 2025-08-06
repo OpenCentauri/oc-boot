@@ -37,6 +37,8 @@ sudo apt install gcc-arm-none-eabi sunxi-tools
     make flash-boot
     ```
 
+**Note:** Both `hello` and `boot` leverage UART0 on the CC mainboard. When you flash using `make` or manually using `sunxi-fel`, have a 3.3v serial adaptor plugged into UART0 and a terminal connected at 115200 to see the output from either program.
+
 ## Resources
 
 *   **[FEL - linux-sunxi.org](https://linux-sunxi.org/FEL):** An excellent resource for understanding the FEL mode on Allwinner devices. FEL is a low-level subroutine in the BootROM used for initial programming and recovery via USB.
