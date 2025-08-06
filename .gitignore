@@ -1,0 +1,5 @@
+*.o
+*.swp
+*.elf
+*.sunxi
+.oc-version
