@@ -2,7 +2,7 @@
 #ifndef __ASM_ARM_TYPES_H
 #define __ASM_ARM_TYPES_H
 
-//#include <stdint.h>
+#include <stdint.h>
 
 typedef unsigned short umode_t;
 

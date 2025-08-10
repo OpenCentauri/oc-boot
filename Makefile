@@ -56,13 +56,15 @@ ARM_ELF_FLAGS = -Os -marm -fpic -Wall
 ARM_ELF_FLAGS += -fno-common -fno-builtin -ffreestanding -nostdinc -fno-strict-aliasing
 ARM_ELF_FLAGS += -mno-thumb-interwork -fno-stack-protector -fno-toplevel-reorder
 ARM_ELF_FLAGS += -Wstrict-prototypes -Wno-format-nonliteral -Wno-format-security
-ARM_ELF_FLAGS += -Iarch
+ARM_ELF_FLAGS += -fno-exceptions -I. -Iarch -Imach-t113s3 -I/home/paul/sandbox/carbon/gcc-linaro-6.4.1-2017.11-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include -I/home/paul/sandbox/carbon/gcc-linaro-6.4.1-2017.11-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/6.4.1/include
 
-oc-boot.elf: oc-boot.c oc-boot.lds version.h
-	$(CROSS_CC) -march=armv5te -g $(ARM_ELF_FLAGS) $< -nostdlib -o $@ -T oc-boot.lds -Wl,-N
+ARM_LNK_FLAGS = -L/home/paul/sandbox/carbon/gcc-linaro-6.4.1-2017.11-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/lib -lgcc
+
+oc-boot.elf: oc-boot.c board.c mach-t113s3/arch_timer.c mach-t113s3/memcpy.S mach-t113s3/memset.S mach-t113s3/sunxi_gpio.c mach-t113s3/sunxi_sdhci.c mach-t113s3/sdmmc.c mach-t113s3/sunxi_usart.c mach-t113s3/sunxi_clk.c oc-boot.lds version.h
+	$(CROSS_CC) -march=armv5te -g $(ARM_ELF_FLAGS) oc-boot.c board.c mach-t113s3/arch_timer.c mach-t113s3/memcpy.S mach-t113s3/memset.S mach-t113s3/sunxi_gpio.c mach-t113s3/sunxi_sdhci.c mach-t113s3/sdmmc.c mach-t113s3/sunxi_usart.c mach-t113s3/sunxi_clk.c -nostdlib -nostartfiles -o $@ -T oc-boot.lds -Wl,-N -Wl,--unresolved-symbols=ignore-all $(ARM_LNK_FLAGS)
 
 hello.elf: hello.c hello.lds version.h
-	$(CROSS_CC) -march=armv5te -g $(ARM_ELF_FLAGS) $< -nostdlib -o $@ -T hello.lds -Wl,-N
+	$(CROSS_CC) -march=armv5te -g $(ARM_ELF_FLAGS) $< -nostdlib -o $@ -T hello.lds -Wl,-N $(ARM_LNK_FLAGS)
 
 version.h:
 	@./autoversion.sh > $@

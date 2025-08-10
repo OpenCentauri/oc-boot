@@ -19,7 +19,7 @@
 #ifndef __XFORMAT_H__
 #define __XFORMAT_H__
 
-//#include <stdarg.h>
+#include <stdarg.h>
 //#include <string.h>
 
 /**

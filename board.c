@@ -6,6 +6,8 @@
 #include "sunxi_spi.h"
 #include "sdmmc.h"
 
+
+
 sunxi_usart_t usart5_dbg = {
 	.base	 = 0x02501400,
 	.id		 = 5,
@@ -69,7 +71,7 @@ int board_sdhci_init()
 	return sdmmc_init(&card0, &sdhci0);
 }
 
-void board_init()
+void board_init(void)
 {
 	board_init_led(led_blue);
 	sunxi_usart_init(&USART_DBG);

@@ -51,10 +51,19 @@
  */
 
 #include "version.h"
+#include "types.h"
 
-typedef unsigned int u32;
-typedef unsigned short int u16;
-typedef unsigned char u8;
+void message(const char *fmt, ...)
+{
+    // This is a dummy implementation
+}
+
+int raise(int signum)
+{
+    return 0;
+}
+
+
 
 #ifndef NULL
 #define NULL ((void*)0)
@@ -277,19 +286,7 @@ static int sunxi_gpio_set_cfgpin(u32 pin, u32 val)
     return 0;
 }
 
-static int sunxi_gpio_set_pull(u32 pin, u32 val)
-{
-    u32 cfg;
-    u32 bank = GPIO_BANK(pin);
-    u32 index = GPIO_PULL_INDEX(pin);
-    u32 offset = GPIO_PULL_OFFSET(pin);
-    u32 *addr = GPIO_PULL_BASE(bank) + index;
-    cfg = readl(addr);
-    cfg &= ~(0x3 << offset);
-    cfg |= val << offset;
-    writel(cfg, addr);
-    return 0;
-}
+
 
 /*****************************************************************************
  * Nearly all the Allwinner SoCs are using the same VER_REG register for     *
@@ -560,11 +557,7 @@ static int get_boot_device(const struct soc_info *soc)
     return BOOT_DEVICE_UNK;
 }
 
-static int board_init() {
-    uart0_puts("BOBDOLE!\n");
 
-    return 0;
-}
 
 #if 0
 sunxi_dram_init(void)

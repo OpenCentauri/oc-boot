@@ -1,6 +1,7 @@
 #ifndef __SDHCI_H__
 #define __SDHCI_H__
 
+#include <stdbool.h>
 #include "sunxi_gpio.h"
 
 typedef enum {

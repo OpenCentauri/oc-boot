@@ -1,6 +1,7 @@
 #ifndef __SDCARD_H__
 #define __SDCARD_H__
 
+#include <stdbool.h>
 #include "sunxi_sdhci.h"
 
 enum {
