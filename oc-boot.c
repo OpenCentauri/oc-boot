@@ -60,36 +60,36 @@ typedef unsigned char u8;
 #define NULL ((void*)0)
 #endif
 
-#define set_wbit(addr, v)    (*((volatile unsigned long  *)(addr)) |= (unsigned long)(v))
-#define readl(addr)        (*((volatile unsigned long  *)(addr)))
+#define set_wbit(addr, v)      (*((volatile unsigned long  *)(addr)) |= (unsigned long)(v))
+#define readl(addr)            (*((volatile unsigned long  *)(addr)))
 #define writel(v, addr)        (*((volatile unsigned long  *)(addr)) = (unsigned long)(v))
 
-#define SUNXI_UART0_BASE    0x01C28000
-#define SUNXI_PIO_BASE        0x01C20800
-#define AW_CCM_BASE        0x01c20000
-#define AW_SRAMCTRL_BASE    0x01c00000
+#define SUNXI_UART0_BASE       0x01C28000
+#define SUNXI_PIO_BASE         0x01C20800
+#define AW_CCM_BASE            0x01c20000
+#define AW_SRAMCTRL_BASE       0x01c00000
 
-#define A80_SRAMCTRL_BASE    0x00800000
-#define A80_CCM_BASE        0x06000000
-#define A80_PIO_BASE        0x06000800
-#define A80_UART0_BASE        0x07000000
+#define A80_SRAMCTRL_BASE      0x00800000
+#define A80_CCM_BASE           0x06000000
+#define A80_PIO_BASE           0x06000800
+#define A80_UART0_BASE         0x07000000
 
-#define H6_UART0_BASE        0x05000000
-#define H6_PIO_BASE        0x0300B000
-#define H6_CCM_BASE        0x03001000
-#define H6_SRAMCTRL_BASE    0x03000000
+#define H6_UART0_BASE          0x05000000
+#define H6_PIO_BASE            0x0300B000
+#define H6_CCM_BASE            0x03001000
+#define H6_SRAMCTRL_BASE       0x03000000
 
 #define R329_UART0_BASE        0x02500000
-#define R329_PIO_BASE        0x02000400
-#define R329_CCM_BASE        0x02001000
+#define R329_PIO_BASE          0x02000400
+#define R329_CCM_BASE          0x02001000
 
-#define V853_PIO_BASE        0x02000000
+#define V853_PIO_BASE          0x02000000
 
-#define SUNIV_UART0_BASE    0x01c25000
+#define SUNIV_UART0_BASE       0x01c25000
 
-#define SRAM_A1_ADDR_0        0x00000000
-#define SRAM_A1_ADDR_10000    0x00010000
-#define SRAM_A1_ADDR_20000    0x00020000
+#define SRAM_A1_ADDR_0         0x00000000
+#define SRAM_A1_ADDR_10000     0x00010000
+#define SRAM_A1_ADDR_20000     0x00020000
 #define SRAM_A1_ADDR_100000    0x00100000
 
 /*****************************************************************************
@@ -566,6 +566,17 @@ static int board_init() {
     return 0;
 }
 
+#if 0
+sunxi_dram_init(void)
+{
+    /* This function is a placeholder for the actual DRAM initialization code */
+    uart0_puts("DRAM initialized!\n");
+}
+#endif
+
+#include "dram.h"
+#include "dram.c"
+
 int main(void)
 {
     const struct soc_info *soc = sunxi_detect_soc();
@@ -573,16 +584,22 @@ int main(void)
     if (soc == NULL)
         return 0;
 
-    gpio_init(soc);
-    uart0_init(soc);
+    //gpio_init(soc);
+    //uart0_init(soc);
 
-    uart0_puts("\nLoading OpenCentauri Bootloader (version ");
+    board_init();
+    //sunxi_clk_init();
+
+    //message("\r\n");
+    //info("AWBoot r%" PRIu32 " starting...\r\n", (u32)BUILD_REVISION);
+
+    uart0_puts("\r\nOpenCentauri Boot r");
     uart0_puts(VERSION);
     uart0_puts(") for Allwinner ");
     uart0_puts(soc->soc_name);
-    uart0_puts("...\n");
+    uart0_puts(" starting...\r\n");
 
-    board_init();
+    sunxi_dram_init();
 
     uart0_puts("Initialization Complete!\n");
 

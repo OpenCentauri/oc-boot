@@ -46,9 +46,6 @@ flash-hello: hello.sunxi
 clean:
 	@rm -vf version.h *.o *.elf *.sunxi *.bin *.nm *.orig
 
-sunxi-%: %.c
-	$(CC) $(HOST_CFLAGS) $(LDFLAGS) -o $@ $(filter %.c,$^) $(LIBS)
-
 %.bin: %.elf
 	$(CROSS_COMPILE)objcopy -O binary $< $@
 
@@ -59,6 +56,7 @@ ARM_ELF_FLAGS = -Os -marm -fpic -Wall
 ARM_ELF_FLAGS += -fno-common -fno-builtin -ffreestanding -nostdinc -fno-strict-aliasing
 ARM_ELF_FLAGS += -mno-thumb-interwork -fno-stack-protector -fno-toplevel-reorder
 ARM_ELF_FLAGS += -Wstrict-prototypes -Wno-format-nonliteral -Wno-format-security
+ARM_ELF_FLAGS += -Iarch
 
 oc-boot.elf: oc-boot.c oc-boot.lds version.h
 	$(CROSS_CC) -march=armv5te -g $(ARM_ELF_FLAGS) $< -nostdlib -o $@ -T oc-boot.lds -Wl,-N
